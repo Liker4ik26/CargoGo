@@ -24,11 +24,23 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("debug") {
+            buildConfigField(
+                "String",
+                "CARGOGO_URL",
+                "\"https://7945-109-171-32-98.ngrok-free.app/api/\""
+            )
+        }
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
+            )
+            buildConfigField(
+                "String",
+                "CARGOGO_URL",
+                "\"https://7945-109-171-32-98.ngrok-free.app/api/\""
             )
         }
     }
@@ -45,6 +57,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 
@@ -101,6 +114,18 @@ dependencies {
     implementation(libs.accompanist.switerefreshlayout)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.insets)
+
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.compiler)
+    implementation(libs.moshi.adapters)
+
+    implementation(libs.retrofit.client)
+    implementation(libs.retrofit.moshi)
+
+    implementation(libs.okhttp.client)
+    implementation(libs.okhttp.logginginterceptor)
+
+    implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.compose.ui)
